@@ -11,3 +11,5 @@ def hello_world():
 
 app.run()
 
+#This file should be similar to the last one, the only difference being that this one doesn't print something in the terminal
+#We were correct
