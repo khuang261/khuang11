@@ -13,3 +13,10 @@ def hello_world():
 
 app.debug = True
 app.run()
+
+#This should turn on a sort of debug mode, which probably makes it easier to debug, maybe by printing out stuff from the terminal on the website.
+#We didn't notice any differences, other than there being these messages in the terminal
+# * Debug mode: on
+# * Restarting with stat
+# * Debugger is active!
+# * Debugger PIN: 374-915-956
