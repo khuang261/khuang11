@@ -1,6 +1,7 @@
-# Clyde 'Thluffy' Sinclair
-# SoftDev -- Rona Ed.
-# Oct 2020 
+# Team Gummy Bear : Dragos Lup, Kelly Huang
+# SoftDev
+# K10 -- Putting Little Pieces Together
+# 2020-10-12
 
 from flask import Flask
 app = Flask(__name__) #create instance of class Flask
