@@ -1,0 +1,72 @@
+Comparison Operators:
+Query Operators - provide additional ways to locate data within the database
+$ has multiple uses - precedes MQL operators, precedes Aggregation pipeline stages, allows access to field values
+Comparison operators specifically allows us to find data within a certain range.
+-$eq = EQual to - used as default operator when no operator is specified
+-$ne = Not EQual to
+-$gt > Greater Than
+-$lt < Less Than
+-$gte >= Greater Than or Equal to
+-$lte <= Less Than or Equal to
+Format: { <field> : {<operator> : <value>}}
+- use find command
+
+Logic Operators:
+-$and : Match all of the specified query clauses
+-$or : At least one of the query clauses is matched
+-$nor : Fail to match both given clauses
+-$not : Negates the query requirement
+-For and, or and nor: {<operator> : [{statement1}, {statement2}]}
+-For not: {"$not": {statement}}
+-$and is used as the default operator when an operator is not specified
+- use explicit $and when you need to include the same operator more than once in a query
+
+Query Operator:
+$exprallows the use of aggregation expressions within the query language
+Format: {$expr: {<expression>}}
+$expr allows us to use variables and conditional statements
+-you can compare fields within the same document
+- $ also addresses the field value
+Aggregation syntax: {<operator> : {<field>,<value>}}
+
+Array Operators:
+-$push - allows us to add an element to an array, turns a field into an array field if it was previously a different type
+-order matters when searching arrays
+-A single element will return all documents where the specified array field contains the given element.
+-$all - returns all documents with those array elements regardless of order
+-$size : <number> - only returns arrays of that length
+-projection allows us to decide what document fields are showed
+
+Array Operators and Projection:
+Ex of projection:
+db.listingsAndReviews.find({ "amenities":
+        { "$size": 20, "$all": [ "Internet", "Wifi",  "Kitchen", "Heating",
+                                 "Family/kid friendly", "Washer", "Dryer",
+                                 "Essentials", "Shampoo", "Hangers",
+                                 "Hair dryer", "Iron",
+                                 "Laptop friendly workspace" ] } },
+                            {"price": 1, "address": 1}).pretty()
+- You can specify what you want or don't want to see.
+Format: db.<collection>.find({query},{<projection>})
+1 - include the field
+0 - exclude the field
+-Use only 1s or 0s
+db.<collection>.find({<query>},{<field1> : 1, <field2> : 2}})
+or
+db.<collection>.find({<query>}, {<field1> : 0, <field2> : 0}})
+-only exception is when excluding the _id because that is shown on Default
+-use "$elemMatch" to find specified element
+example: db.grades.find({ "scores": { "$elemMatch": { "type": "extra credit" } }
+               }).pretty()
+-Matches documents that contain an array field with at least one element that matches the specified query criteria
+or projects only the array elements with at least one element that matches the specified criteria
+
+Querying Arrays and Subdocuments
+-use dot notation
+Example: db.companies.find({ "relationships.0.person.last_name": "Zuckerberg" },
+                  { "name": 1 }).pretty()
+0: position of the first array element
+person: field name with a nested object as a value
+last_name: field name within the person sub-document
+"Zuckerberg": value that we are looking for
+$regex - specifies the string you're trying to match

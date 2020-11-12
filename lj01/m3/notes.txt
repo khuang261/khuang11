@@ -1,0 +1,48 @@
+Inserting New Documents
+-You can insert a document using whatever view is most convenient for you. JSON notation or one pair-value at a
+time
+Object ID - already populated
+- Every document must have a unique _id value
+- It is a unique identifier.
+- Every _id value must have a different value so you can have a document where all documents in a collection are the same or completely different. Only _id must be different.
+ObjectID(): Default value for the _id unless otherwise specified
+- You can store different data types.
+
+Errors/Inserting using MongoShell
+--drop option - removes whole collection before adding it back - gets rid of duplicate key error
+writeError: failed to write the collection
+- cannot add a document with the same _id value
+- Identical documents can exist in the same collection as long as their _id values are different.
+- If you don't insert a value, a random _id will be assigned
+- insert using .insert() command. ex: db.inspections.insert({"_id" : ObjectId("afkaslfja"...)})
+
+Order: inserting multiple documents at a time
+to add mulitply documents, put them in an array
+ex: db.inspections.insert([{"test : 1"}, {"test" : 2}. {"test" : 3}])
+- default behavior is to insert based on which comes first in array - the moment there is a duplicate key error, the insert operation stops
+- to change: add the ordered option
+ex: db.inspections.insert([{ "_id": 1, "test": 1 },{ "_id": 1, "test": 2 },
+                       { "_id": 3, "test": 3 }],{ "ordered": false })
+- if you insert a document into a collection that doesn't exist, mongodb makes one for you automatically.
+- use training - creates a new database, but if you don't add anything to it, training won't be part of the Atlas cluster, because there is no data associated with it.
+
+Updating Documents:
+- You can store arrays in documents.
+- click edit to update
+- You can add another field or array
+- hit update after done
+
+Updating Documents with MongoShell:
+updateOne() - if there are multiple documents that match a given criteria, only the one found first will be updated
+- updateMany() - all documents that match a query are updated.
+ex: db.zips.updateMany({ "city": "HUDSON" }, { "$inc": { "pop": 10 } })
+$inc - increments by the given value
+$set - updates the value of the given field with a specified value
+- implicit creation of field - if field doesn't already exist, the field is automatically added
+$push - update an array
+
+Deleting: 
+- garbage can button
+-deleteOne() - only good for when querying with _id value
+-deleteMany()
+-to delete a collection - use drop()
